@@ -15,8 +15,10 @@ nnoremap <cr> :noh<CR><CR>:<backspace>
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
-Plugin 'Valloric/YouCompleteMe'
-Plugin 'SirVer/ultisnips'
+if (v:version > 704)
+    Plugin 'Valloric/YouCompleteMe'
+    Plugin 'SirVer/ultisnips'
+endif
 Plugin 'honza/vim-snippets'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
@@ -85,7 +87,9 @@ nnoremap <silent> <A-Left> :execute 'silent! tabmove ' . (tabpagenr()-2)<CR>
 nnoremap <silent> <A-Right> :execute 'silent! tabmove ' . tabpagenr()<CR>
 
 " Fix YouCompleteMe preview window from not closing
-autocmd CompleteDone * pclose
+if (v:version > 704)
+    autocmd CompleteDone * pclose
+endif
 
 " Python 2 interpretter for YCM
 let g:ycm_server_python_interpreter = "/usr/bin/python"
