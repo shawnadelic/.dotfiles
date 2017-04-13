@@ -1,0 +1,124 @@
+" Basic settings
+set tabstop=4
+set shiftwidth=4
+set softtabstop=4
+set nocompatible
+set showmatch
+filetype off
+
+" Search settings
+set incsearch
+set hlsearch
+nnoremap <cr> :noh<CR><CR>:<backspace>
+
+" Initialize Vundle
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+Plugin 'VundleVim/Vundle.vim'
+Plugin 'Valloric/YouCompleteMe'
+Plugin 'SirVer/ultisnips'
+Plugin 'honza/vim-snippets'
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
+Plugin 'sjl/badwolf'
+Plugin 'nvie/vim-flake8'
+Plugin 'pangloss/vim-javascript'
+Plugin 'mxw/vim-jsx'
+Plugin 'mru.vim'
+Plugin 'mileszs/ack.vim'
+Plugin 'tpope/vim-unimpaired'
+Plugin 'keith/swift.vim'
+
+" Airline settings
+set t_Co=256
+if !exists('g:airline_symbols')
+        let g:airline_symbols = {}
+endif
+set laststatus=2
+"let g:airline_theme='ubaryd'
+let g:airline_theme='durant'
+set guifont=DejaVu\ Sans\ Mono\ for\ Powerline:s14
+let g:airline_left_sep = ''
+let g:airline_left_alt_sep = ''
+let g:airline_right_sep = ''
+let g:airline_right_alt_sep = ''
+let g:airline_symbols.branch = ''
+let g:airline_symbols.readonly = ''
+let g:airline_symbols.linenr = '¶'
+let g:airline_symbols.branch = '⎇'
+let g:airline_symbols.paste = 'ρ'
+let g:airline_symbols.whitespace = 'Ξ'
+
+" Ultisnips settings
+" Not using tab to expand
+let g:UltiSnipsExpandTrigger="<c-j>"
+let g:UltiSnipsJumpForwardTrigger="<c-b>"
+let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+let g:UltiSnipsEditSplit="vertical"
+
+" Start vundle
+call vundle#end()
+filetype plugin indent on
+
+" Custom settings
+set tabstop=4
+set shiftwidth=4
+set expandtab
+set autoindent
+set wildmenu
+set wildmode=list:longest
+colorscheme badwolf
+syntax enable
+au BufRead,BufNewFile *.jinja set filetype=jinja
+
+" Ctags settings
+set tags=tags;/
+
+" Fix titles
+autocmd BufEnter * let &titlestring = ' ' . expand("%:t")
+set title
+
+" Tab switch shortcuts
+nnoremap <C-Left> :tabprevious<CR>
+nnoremap <C-Right> :tabnext<CR>
+nnoremap <silent> <A-Left> :execute 'silent! tabmove ' . (tabpagenr()-2)<CR>
+nnoremap <silent> <A-Right> :execute 'silent! tabmove ' . tabpagenr()<CR>
+
+" Fix YouCompleteMe preview window from not closing
+autocmd CompleteDone * pclose
+
+" Python 2 interpretter for YCM
+let g:ycm_server_python_interpreter = "/usr/bin/python"
+
+" Flake8 key mapping
+autocmd FileType python map <buffer> <F7> :call Flake8()<CR>
+
+" Fix typos
+command W w
+
+" Fixing plugin overrides
+set ts=2
+set sw=2
+
+" Open tag definition in new tab - Ctrl + ]
+map <C-]> :tab split<CR>:exec("tag ".expand("<cword>"))<CR>
+
+" Open tag definition in split screan - Ctrl + \
+map <C-\> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
+
+if $COLORTERM == 'gnome-terminal'
+  set t_Co=256
+endif
+
+" Not sure if I like this (tmux window titles)
+autocmd BufEnter * call system("tmux rename-window " . expand("%:t"))
+autocmd VimLeave * call system("tmux rename-window '  '")
+autocmd BufEnter * let &titlestring = ' ' . expand("%:t")
+autocmd BufEnter * let &titlestring = ' ' . expand("%:t")
+set title
+
+" Quickfix window height
+let g:flake8_quickfix_height=30
+
+" Get rid of ex mode
+map Q <Nop>
