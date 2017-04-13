@@ -22,7 +22,7 @@ safe_mv .ackrc
 ln -s "$dotfile_dir/ack/ackrc" .ackrc
 
 safe_mv .flake8
-ln -s "$dotfile_dir/flake/flake8" .flake8
+ln -s "$dotfile_dir/flake8/flake8.ini" .flake8
 
 # TODO: Do bash stuff better
 
