@@ -26,7 +26,7 @@ ln -s "$dotfile_dir/flake/flake8" .flake8
 
 # TODO: Do bash stuff better
 
-echo ". $dotfile_dir/bash/aliases" >> ~/.bashrc
+echo ". $dotfile_dir/bash/aliases.sh" >> ~/.bashrc
 
 # Install Vundle
 git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
