@@ -24,9 +24,10 @@ ln -s "$dotfile_dir/ack/ackrc" .ackrc
 safe_mv .flake8
 ln -s "$dotfile_dir/flake8/flake8.ini" .flake8
 
-# TODO: Only add to bashrc once
-
-echo ". $dotfile_dir/bash/aliases.sh" >> ~/.bashrc
+# Only add to bashrc once
+if ! grep -q $dotfile_dir/bash/aliases.sh ~/.bashrc; then
+    echo ". $dotfile_dir/bash/aliases.sh" >> ~/.bashrc
+fi
 
 # Install Vundle
 if ! cd .vim/bundle/Vundle.vim/; then
