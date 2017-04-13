@@ -107,7 +107,7 @@ set sw=2
 " Open tag definition in new tab - Ctrl + ]
 map <C-]> :tab split<CR>:exec("tag ".expand("<cword>"))<CR>
 
-" Open tag definition in split screan - Ctrl + \
+" Open tag definition in split screen - Ctrl + \
 map <C-\> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
 
 if $COLORTERM == 'gnome-terminal'
@@ -115,9 +115,8 @@ if $COLORTERM == 'gnome-terminal'
 endif
 
 " Not sure if I like this (tmux window titles)
-autocmd BufEnter * call system("tmux rename-window " . expand("%:t"))
+autocmd BufEnter * call system("tmux rename-window " . expand("%:t:r"))
 autocmd VimLeave * call system("tmux rename-window '  '")
-autocmd BufEnter * let &titlestring = ' ' . expand("%:t")
 autocmd BufEnter * let &titlestring = ' ' . expand("%:t")
 set title
 
