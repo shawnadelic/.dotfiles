@@ -30,6 +30,7 @@ Plugin 'mru.vim'
 Plugin 'mileszs/ack.vim'
 Plugin 'tpope/vim-unimpaired'
 Plugin 'keith/swift.vim'
+Plugin 'kshenoy/vim-signature'
 
 " Airline settings
 set t_Co=256
@@ -121,7 +122,9 @@ autocmd BufEnter * let &titlestring = ' ' . expand("%:t")
 set title
 
 " Quickfix window height
-let g:flake8_quickfix_height=30
+let g:flake8_quickfix_height=20
 
 " Get rid of ex mode
 map Q <Nop>
+
+autocmd FileType qf nnoremap <buffer> <CR> <CR>:lclose<CR>
