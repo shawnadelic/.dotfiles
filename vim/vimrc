@@ -15,7 +15,7 @@ nnoremap <cr> :noh<CR><CR>:<backspace>
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
-if (v:version > 704)
+if (v:version >= 704)
     Plugin 'Valloric/YouCompleteMe'
     Plugin 'SirVer/ultisnips'
 endif
