@@ -89,7 +89,7 @@ nnoremap <silent> <A-Right> :execute 'silent! tabmove ' . tabpagenr()<CR>
 
 " Fix YouCompleteMe preview window from not closing
 if (v:version > 704)
-    autocmd CompleteDone * pclose
+  autocmd CompleteDone * pclose
 endif
 
 " Python 2 interpretter for YCM
@@ -128,3 +128,9 @@ let g:flake8_quickfix_height=20
 map Q <Nop>
 
 autocmd FileType qf nnoremap <buffer> <CR> <CR>:lclose<CR>
+
+" Close QuickFix and Preview Windows
+function! Close()
+  cclose
+  pclose
+endfunction
