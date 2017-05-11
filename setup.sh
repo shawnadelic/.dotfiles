@@ -5,7 +5,7 @@ safe_mv() {
 echo "Setting up custom dotfiles..."
 
 dotfile_dir=$PWD
-backup_dir="$dotfile_dir/.backups"
+backup_dir="$dotfile_dir/.backups/$(date +"%Y-%m-%d")$RANDOM"
 
 echo "Creating backup directory in $backup_dir"
 mkdir -p $backup_dir
@@ -25,8 +25,8 @@ safe_mv .flake8
 ln -s "$dotfile_dir/flake8/flake8.ini" .flake8
 
 # Only add to bashrc once
-if ! grep -q $dotfile_dir/bash/aliases.sh ~/.bashrc; then
-    echo ". $dotfile_dir/bash/aliases.sh" >> ~/.bashrc
+if ! grep -q $dotfile_dir/bash/.bashrc ~/.bashrc; then
+    echo ". $dotfile_dir/bash/.bashrc" >> ~/.bashrc
 fi
 
 # Install Vundle

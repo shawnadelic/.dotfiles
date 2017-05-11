@@ -31,6 +31,7 @@ Plugin 'mileszs/ack.vim'
 Plugin 'tpope/vim-unimpaired'
 Plugin 'keith/swift.vim'
 Plugin 'kshenoy/vim-signature'
+Plugin 'junegunn/fzf'
 
 " Airline settings
 set t_Co=256
@@ -133,4 +134,22 @@ autocmd FileType qf nnoremap <buffer> <CR> <CR>:lclose<CR>
 function! Close()
   cclose
   pclose
+  helpclose
 endfunction
+
+" FZF settings
+" https://github.com/junegunn/fzf
+set rtp+=~/.fzf
+let g:fzf_colors =
+      \ { 'fg':      ['fg', 'Normal'],
+  \ 'bg':      ['bg', 'Normal'],
+  \ 'hl':      ['fg', 'Comment'],
+  \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
+  \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
+  \ 'hl+':     ['fg', 'Statement'],
+  \ 'info':    ['fg', 'PreProc'],
+  \ 'prompt':  ['fg', 'Conditional'],
+  \ 'pointer': ['fg', 'Exception'],
+  \ 'marker':  ['fg', 'Keyword'],
+  \ 'spinner': ['fg', 'Label'],
+  \ 'header':  ['fg', 'Comment'] }
