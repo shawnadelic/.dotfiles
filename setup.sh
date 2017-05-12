@@ -52,10 +52,6 @@ echo $comment
 
 try_to_add_to_bashrc $dotfile_bashrc_path $user_bashrc_path $comment
 
-exit 1
-
-try_to_add_to_bashrc $dotfile_bashrc_path $user_bashrc_path $comment
-
 # Install Vundle
 if ! cd .vim/bundle/Vundle.vim/; then
     git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
