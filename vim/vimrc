@@ -153,3 +153,20 @@ let g:fzf_colors =
   \ 'marker':  ['fg', 'Keyword'],
   \ 'spinner': ['fg', 'Label'],
   \ 'header':  ['fg', 'Comment'] }
+
+" This is actually kind of useful - Use different swap directory
+" for each git branch.
+"
+" TODO: Use subdirectory for specific repos
+function CurrentGitStatus()
+    let b:gitbranch = substitute((system('git symbolic-ref --short HEAD 2>/dev/null')), '\n\+$', '', '')
+    let b:dirname = '/home/shawnhmh/tmp/git/' . b:gitbranch
+endfunc
+call CurrentGitStatus()
+
+" If no git branch, keep default dir
+if b:gitbranch != ""
+    " Make branch directory if doesn't exit
+    call system('mkdir -p ' . b:dirname)
+    let &dir=b:dirname
+endif
