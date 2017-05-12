@@ -166,7 +166,6 @@ function SetVimDir()
     if gitbranch != ""
         " Make branch directory if doesn't exit
         call system('mkdir -p ' . dirname)
-        echo dirname
         let &dir=dirname
     endif
 
