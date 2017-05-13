@@ -158,18 +158,42 @@ let g:fzf_colors =
 " for each git branch.
 "
 " TODO: Use subdirectory for specific repos
-function SetVimDir()
-    let gitbranch = substitute((system('git symbolic-ref --short HEAD 2>/dev/null')), '\n\+$', '', '')
-    let dirname = '/home/shawnhmh/tmp/git/' . gitbranch
+function SetVimDir(...)
+    let verbose = "false"
+    if exists("a:1") && (a:1 == "verbose")
+        let verbose = "true"
+    endif
+    if verbose == "true"
+        echo "Verbose Mode"
+    endif
+    "let repo_name = substitute((system("git remote -v | grep '(fetch)' | sed 's/.*\/\([^ ]*\)\/.*/\1/'")), '\n\+$', '', '')
+    let hash_length = 20
+    let repo_name = split(system("git remote -v | grep '(fetch)'"))[1]
+    let repo_name_hash = substitute(system("echo -n " . repo_name . " | md5sum | cut -c-" . hash_length), '\n\+$', '', '')
 
-    " If no git branch, keep default dir
-    if gitbranch != ""
-        " Make branch directory if doesn't exit
-        call system('mkdir -p ' . dirname)
-        let &dir=dirname
+    let git_branch = substitute((system('git symbolic-ref --short HEAD 2>/dev/null')), '\n\+$', '', '')
+    let git_branch_hash = substitute(system("echo -n " . git_branch . " | md5sum | cut -c-" . hash_length), '\n\+$', '', '')
+
+    let dir_name = '/home/shawnhmh/tmp/git/' . repo_name_hash . '/' . git_branch_hash
+
+    if verbose == "true"
+        echo "dirname: " . dir_name
     endif
 
-    unlet gitbranch
-    unlet dirname
+    " It git branch, make new directory
+    " If no git branch, keep default dir
+    if git_branch != ""
+        " Make branch directory if doesn't exit
+        if verbose
+            echo("Verifying directory " . dir_name . " exists")
+        endif
+        call system('mkdir -p ' . dir_name)
+        let &dir=dir_name
+    endif
+
+    unlet git_branch
+    unlet dir_name
+    unlet verbose
+    unlet repo_name
 endfunc
 call SetVimDir()
