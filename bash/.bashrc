@@ -74,3 +74,8 @@ all_colors() {
     done
     echo
 }
+
+alias h='history'
+alias c='clear'
+alias x='exit'
+alias r='fc -s' # repeat
