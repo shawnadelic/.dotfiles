@@ -122,10 +122,10 @@ autocmd VimLeave * call system("tmux rename-window '  '")
 autocmd BufEnter * let &titlestring = ' ' . expand("%:t")
 set title
 
-" Quickfix window height
+" Set Quickfix window height to be taller
 let g:flake8_quickfix_height=20
 
-" Get rid of ex mode
+" Get rid of ex mode--I never use it anyway
 map Q <Nop>
 
 autocmd FileType qf nnoremap <buffer> <CR> <CR>:lclose<CR>
@@ -154,11 +154,19 @@ let g:fzf_colors =
   \ 'spinner': ['fg', 'Label'],
   \ 'header':  ['fg', 'Comment'] }
 
+function! HashedString(string)
+    let git_branch = "master"
+    let hash_length = 20
+    return substitute(system("echo -n " . a:string . " | md5sum | cut -c-" . hash_length), '\n\+$', '', '')
+    unlet git_branch
+    unlet hash_length
+endfunc
+
 " This is actually kind of useful - Use different swap directory
 " for each git branch.
 "
 " TODO: Use subdirectory for specific repos
-function SetVimDir(...)
+function! SetVimDir(...)
     let verbose = "false"
     if exists("a:1") && (a:1 == "verbose")
         let verbose = "true"
@@ -166,34 +174,33 @@ function SetVimDir(...)
     if verbose == "true"
         echo "Verbose Mode"
     endif
-    "let repo_name = substitute((system("git remote -v | grep '(fetch)' | sed 's/.*\/\([^ ]*\)\/.*/\1/'")), '\n\+$', '', '')
-    let hash_length = 20
-    let repo_name = split(system("git remote -v | grep '(fetch)'"))[1]
-    let repo_name_hash = substitute(system("echo -n " . repo_name . " | md5sum | cut -c-" . hash_length), '\n\+$', '', '')
-
-    let git_branch = substitute((system('git symbolic-ref --short HEAD 2>/dev/null')), '\n\+$', '', '')
-    let git_branch_hash = substitute(system("echo -n " . git_branch . " | md5sum | cut -c-" . hash_length), '\n\+$', '', '')
-
-    let dir_name = '/home/shawnhmh/tmp/git/' . repo_name_hash . '/' . git_branch_hash
-
-    if verbose == "true"
-        echo "dirname: " . dir_name
-    endif
 
     " It git branch, make new directory
     " If no git branch, keep default dir
+    let parent_dir = substitute(expand("%:p:h"), '\n+\$', '', '')
+    let git_branch = substitute((system('cd ' . parent_dir . ' | git symbolic-ref --short HEAD 2>/dev/null')), '\n\+$', '', '')
     if git_branch != ""
+
+        let repo_name = split(system("git remote -v | grep '(fetch)'"))[1]
+        let file_path = substitute(expand("%:p:h"), '\n\+$', '', '')
+
+        let git_branch_hash = HashedString(repo_name)
+        let repo_name_hash = HashedString(repo_name)
+        let file_path_hash = HashedString(file_path)
+
+        let dir_name = '/home/shawnhmh/tmp/git/' . repo_name_hash . '/' . git_branch_hash . '/' . file_path_hash
+
         " Make branch directory if doesn't exit
         if verbose
             echo("Verifying directory " . dir_name . " exists")
         endif
         call system('mkdir -p ' . dir_name)
         let &dir=dir_name
+        unlet repo_name
+        unlet dir_name
     endif
 
     unlet git_branch
-    unlet dir_name
     unlet verbose
-    unlet repo_name
 endfunc
 call SetVimDir()
