@@ -6,6 +6,9 @@ set nocompatible
 set showmatch
 filetype off
 
+" Fix problem with Vundle
+set shell=bash
+
 " Search settings
 set incsearch
 set hlsearch
@@ -14,23 +17,52 @@ nnoremap <cr> :noh<CR><CR>:<backspace>
 " Initialize Vundle
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
+
 Plugin 'VundleVim/Vundle.vim'
+
 if (v:version >= 704)
-    Plugin 'Valloric/YouCompleteMe'
-    Plugin 'SirVer/ultisnips'
+  " AutoComplete
+  Plugin 'Valloric/YouCompleteMe'
+
+  " Snippets (not sure how much I use this)
+  Plugin 'SirVer/ultisnips'
 endif
+
+" Misc
 Plugin 'honza/vim-snippets'
+
+" Airliner
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
+
+" Badwolf Theme
 Plugin 'sjl/badwolf'
-Plugin 'nvie/vim-flake8'
+
+" Recently-opened files
+Plugin 'mru.vim'
+
+" Ack
+Plugin 'mileszs/ack.vim'
+
+" Bracket mappings (rarely use, maybe remove)
+Plugin 'tpope/vim-unimpaired'
+
+" Markers
+Plugin 'kshenoy/vim-signature'
+
+" Language-based syntax highlighting
+Plugin 'keith/swift.vim'
 Plugin 'pangloss/vim-javascript'
 Plugin 'mxw/vim-jsx'
-Plugin 'mru.vim'
-Plugin 'mileszs/ack.vim'
-Plugin 'tpope/vim-unimpaired'
-Plugin 'keith/swift.vim'
-Plugin 'kshenoy/vim-signature'
+
+" Python-linting
+Plugin 'nvie/vim-flake8'
+
+" Vim markdown syntax
+Plugin 'godlygeek/tabular'
+Plugin 'plasticboy/vim-markdown'
+
+" Fzf fuzzyfinder
 Plugin 'junegunn/fzf'
 
 " Airline settings
@@ -39,7 +71,6 @@ if !exists('g:airline_symbols')
         let g:airline_symbols = {}
 endif
 set laststatus=2
-"let g:airline_theme='ubaryd'
 let g:airline_theme='durant'
 set guifont=DejaVu\ Sans\ Mono\ for\ Powerline:s14
 let g:airline_left_sep = ''
@@ -64,16 +95,10 @@ let g:UltiSnipsEditSplit="vertical"
 call vundle#end()
 filetype plugin indent on
 
-" Custom settings
-set tabstop=4
-set shiftwidth=4
-set expandtab
-set autoindent
-set wildmenu
-set wildmode=list:longest
-colorscheme badwolf
+" Syntax highlighting settings
 syntax enable
-au BufRead,BufNewFile *.jinja set filetype=jinja
+autocmd BufRead,BufNewFile *.jinja set filetype=jinja
+autocmd BufRead,BufNewFile README set filetype=markdown
 
 " Ctags settings
 set tags=tags;/
@@ -136,6 +161,9 @@ function! Close()
   pclose
   helpclose
 endfunction
+
+" Vim markdown settings
+let g:vim_markdown_folding_disabled = 1
 
 " FZF settings
 " https://github.com/junegunn/fzf
@@ -204,3 +232,12 @@ function! SetVimDir(...)
     unlet verbose
 endfunc
 call SetVimDir()
+
+" Custom settings
+set tabstop=4
+set shiftwidth=4
+set expandtab
+set autoindent
+set wildmenu
+set wildmode=list:longest
+colorscheme badwolf
