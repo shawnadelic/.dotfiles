@@ -1,15 +1,3 @@
-# Fix typos
-alias xit="exit"
-alias eixt="exit"
-alias Q="q"
-
-# Colorful less
-alias less="less -R"
-
-# Aliases
-alias list='ls -agh --color --time-style=+"%R"'
-alias time='date +"%r"'
-
 # Wip - Create work-in-progress temp commit
 alias wip="git add -A && git commit -m 'WIP'"
 
@@ -58,11 +46,6 @@ if [[ "$TERM" == "screen-256color" ]] || [[ "$TERM" == "bash" ]]; then
     echo -ne '\033k   \033\\'
 fi
 
-# By default, pgrep and pkill stupidly only search first 15 characters
-# of process names.
-alias pgrep='pgrep -f'
-alias pkill='pkill -f'
-
 # Print all colors
 all_colors() {
     color_per_row=12
@@ -75,7 +58,22 @@ all_colors() {
     echo
 }
 
+# Aliases and shortcuts
 alias h='history'
 alias c='clear'
 alias x='exit'
 alias r='fc -s' # repeat
+
+alias less="less -R"  # Colorful less
+alias list='ls -agh --color --time-style=+"%R"'  # More detailed ls
+alias time='date +"%r"'  # Current (readable) datetime
+
+# By default, pgrep and pkill stupidly only search first 15 characters
+# of process names.
+alias pgrep='pgrep -f'
+alias pkill='pkill -f'
+
+# Common typos
+alias xit="exit"
+alias eixt="exit"
+alias Q="q"
