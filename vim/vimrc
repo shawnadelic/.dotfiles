@@ -10,13 +10,14 @@ let mapleader = "\<Space>"
 set incsearch  " Incremental search (while typing)
 set hlsearch  " Highlight search terms
 
-" Turn off search highlight by pressing Enter key
+" Hide search highlight by pressing Enter key
 nnoremap <cr> :nohlsearch<CR>:<backspace>
 
 " Initialize Vundle
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
+" Vundle plugin manager
 Plugin 'VundleVim/Vundle.vim'
 
 if (v:version >= 704)
@@ -70,6 +71,9 @@ Plugin 'ipod825/TagJump'
 
 " NERD Commenter
 Plugin 'scrooloose/nerdcommenter'
+
+" Vim fugitive - Git integration
+Plugin 'tpope/vim-fugitive'
 
 " Airline settings
 set t_Co=256
