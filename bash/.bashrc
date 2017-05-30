@@ -73,11 +73,13 @@ alias gs='git status'
 alias gl='git log'
 alias gd='git diff'
 alias gb='git branch'
-alias gc='git checkout'
 alias ga='git add -A'
+alias gc='git checkout'
+alias branch='git branch'
+alias checkout='git checkout'
 
 # Ctags alias for python directories
-alias pytags="ctags -R --fields=+l --languages=python --python-kinds=-iv -f ./tags $(python -c "import os, sys; print(' '.join('{}'.format(d) for d in sys.path if os.path.isdir(d)))")"
+alias pytags="ctags -R --fields=+l --languages=python --python-kinds=-iv ."
 
 # By default, pgrep and pkill stupidly only search first 15 characters
 # of process names.
