@@ -133,10 +133,6 @@ cnoreabbrev W w
 cnoreabbrev Q q
 cnoreabbrev Q! q!
 
-if $COLORTERM == 'gnome-terminal'
-  set t_Co=256
-endif
-
 " Better titles for tmux
 autocmd BufEnter * call system("tmux rename-window " . expand("%:t:r"))
 autocmd VimLeave * call system("tmux rename-window '  '")
