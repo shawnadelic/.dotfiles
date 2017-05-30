@@ -1,18 +1,17 @@
-" Basic settings
-set tabstop=4
-set shiftwidth=4
-set softtabstop=4
-set nocompatible
-set showmatch
-filetype off
+" Use <Space> as leader
+let mapleader = "\<Space>"
 
 " Fix problem with Vundle
-set shell=bash
+" https://github.com/VundleVim/Vundle.vim/issues/622
+" TODO: Probably not be necessary after all, will delete
+" set shell=bash
 
 " Search settings
-set incsearch
-set hlsearch
-nnoremap <cr> :noh<CR><CR>:<backspace>
+set incsearch  " Incremental search (while typing)
+set hlsearch  " Highlight search terms
+
+" Turn off search highlight by pressing Enter key
+nnoremap <cr> :nohlsearch<CR>:<backspace>
 
 " Initialize Vundle
 set rtp+=~/.vim/bundle/Vundle.vim
@@ -65,6 +64,13 @@ Plugin 'plasticboy/vim-markdown'
 " Fzf fuzzyfinder
 Plugin 'junegunn/fzf'
 
+" Better tab jumping
+" TODO: Fork and make improvements
+Plugin 'ipod825/TagJump'
+
+" NERD Commenter
+Plugin 'scrooloose/nerdcommenter'
+
 " Airline settings
 set t_Co=256
 if !exists('g:airline_symbols')
@@ -107,12 +113,6 @@ set tags=tags;/
 autocmd BufEnter * let &titlestring = ' ' . expand("%:t")
 set title
 
-" Tab switch shortcuts
-nnoremap <C-Left> :tabprevious<CR>
-nnoremap <C-Right> :tabnext<CR>
-nnoremap <silent> <A-Left> :execute 'silent! tabmove ' . (tabpagenr()-2)<CR>
-nnoremap <silent> <A-Right> :execute 'silent! tabmove ' . tabpagenr()<CR>
-
 " Fix YouCompleteMe preview window from not closing
 if (v:version > 704)
   autocmd CompleteDone * pclose
@@ -121,15 +121,17 @@ endif
 " Python 2 interpretter for YCM
 let g:ycm_server_python_interpreter = "/usr/bin/python"
 
-" Flake8 key mapping
-autocmd FileType python map <buffer> <F7> :call Flake8()<CR>
+" Flake8 key mapping - <Space> + f
+autocmd FileType python nnoremap <leader>f :call Flake8()<CR>
 
-" Fix typos
-command W w
-
-" Fixing plugin overrides
-set ts=2
-set sw=2
+" Shortcuts and fixes for typos
+" Was `command`, replaced with `cnoreabbrev`
+nnoremap <leader>q :q<CR>
+nnoremap <leader>q! :q!<CR>
+nnoremap <leader>wq :wq<CR>
+cnoreabbrev W w
+cnoreabbrev Q q
+cnoreabbrev Q! q!
 
 " Open tag definition in new tab - Ctrl + ]
 map <C-]> :tab split<CR>:exec("tag ".expand("<cword>"))<CR>
@@ -137,11 +139,79 @@ map <C-]> :tab split<CR>:exec("tag ".expand("<cword>"))<CR>
 " Open tag definition in split screen - Ctrl + \
 map <C-\> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
 
+map <C-]> :TabExpand 1<CR>
+
+command -nargs=1 TabExpand call HandleTabTagExpand( <f-args> )
+
+let s:commentchar = """
+
+function HandleTabTagExpand(tagnumber)
+    let tagident = expand("<cword>")
+    redir @a
+    try
+        sil exe "tselect ".tagident
+    catch /^Vim(\a\+):E433:/ " no tag file
+        echom "No tag file found."
+        return
+    catch /^Vim(\a\+):E426:/ " tag not found
+        echom "Tag not found."
+        return
+    endtry
+    redir END
+    let tagresults = split(@a, "\n")
+    let tagmatches = []
+    let linenum = 0
+    for line in tagresults
+        if linenum % 3 != 1
+            " every third line contains the file names
+            let linenum = linenum + 1
+            continue
+        endif
+        " figure out where the filename actually starts
+        " (it's usually column 32, but it might be farther)
+        " one before 32 is 31, but index is 30 since arrays begin at zero
+        let filestart = 31
+        let c = line[filestart]
+        while (filestart < strlen(line))
+            let filestart = filestart + 1
+            if c == " "
+                break
+            endif
+            let c = line[filestart]
+        endwhile
+        " store the parsed match in an array
+        call add(tagmatches, strpart(line, filestart))
+        let linenum = linenum + 1
+    endfor
+    " navigate to the match specified by tagnumber
+    try
+        " XXX: Working here
+        exe "drop ".tagmatches[a:tagnumber-1]
+    catch /^Vim(\a\+):E471:/ " argument required (means no tag found)
+        echom "Tag not found."
+    endtry
+    let done = 0
+    let matchcount = 0
+    let f_line = ""
+    while done < 1 && matchcount < 1000
+        sil exe "/".tagident
+        let f_line = getline(".")
+        let matchcount = matchcount + 1
+        if match(f_line, "^\s+".s:commentchar) < 0
+            let done = 1
+        endif
+    endwhile
+    let f_index = stridx( f_line, tagident )
+    sil exe "normal 0"
+    sil exe "normal ".f_index."l"
+endfunction
+
+
 if $COLORTERM == 'gnome-terminal'
   set t_Co=256
 endif
 
-" Not sure if I like this (tmux window titles)
+" Better titles for tmux
 autocmd BufEnter * call system("tmux rename-window " . expand("%:t:r"))
 autocmd VimLeave * call system("tmux rename-window '  '")
 autocmd BufEnter * let &titlestring = ' ' . expand("%:t")
@@ -153,14 +223,18 @@ let g:flake8_quickfix_height=20
 " Get rid of ex mode--I never use it anyway
 map Q <Nop>
 
-autocmd FileType qf nnoremap <buffer> <CR> <CR>:lclose<CR>
+"autocmd FileType qf nnoremap <buffer> <CR> <CR>:lclose<CR>
 
 " Close QuickFix and Preview Windows
 function! Close()
+  lclose
   cclose
   pclose
   helpclose
 endfunction
+
+" Shortcut for Close - <Space> + c
+nnoremap <leader>c :call Close()<CR>
 
 " Vim markdown settings
 let g:vim_markdown_folding_disabled = 1
@@ -233,11 +307,18 @@ function! SetVimDir(...)
 endfunc
 call SetVimDir()
 
-" Custom settings
+" Tab and indentation settings
 set tabstop=4
 set shiftwidth=4
+set softtabstop=4
 set expandtab
 set autoindent
-set wildmenu
+
+" Matching braces, etc
+set showmatch
+
+" Menu autocomplete - Show all choices
 set wildmode=list:longest
+
+" Color scheme
 colorscheme badwolf
