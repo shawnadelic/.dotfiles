@@ -132,6 +132,7 @@ autocmd FileType python nnoremap <leader>f :call Flake8()<CR>
 " Was `command`, replaced with `cnoreabbrev`
 nnoremap <leader>q :q<CR>
 nnoremap <leader>q! :q!<CR>
+nnoremap <leader>w :w<CR>
 nnoremap <leader>wq :wq<CR>
 cnoreabbrev W w
 cnoreabbrev Q q
