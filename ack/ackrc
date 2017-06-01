@@ -1,3 +1,4 @@
---ignore-fil=ext:js
+--ignore-file=ext:js
 --ignore-dir=venv
+--ignore-file=is:tags
 --color
