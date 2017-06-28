@@ -12,6 +12,7 @@ set hlsearch  " Highlight search terms
 
 " Hide search highlight by pressing Enter key
 nnoremap <cr> :nohlsearch<CR>:<backspace>
+nnoremap <cr> :nohlsearch<CR><CR>:<backspace><backspace>
 
 " Initialize Vundle
 set rtp+=~/.vim/bundle/Vundle.vim
@@ -19,6 +20,7 @@ call vundle#begin()
 
 " Vundle plugin manager
 Plugin 'VundleVim/Vundle.vim'
+
 
 if (v:version >= 704)
   " AutoComplete
@@ -81,7 +83,7 @@ if !exists('g:airline_symbols')
         let g:airline_symbols = {}
 endif
 set laststatus=2
-let g:airline_theme='durant'
+let g:airline_theme='kolor'
 set guifont=DejaVu\ Sans\ Mono\ for\ Powerline:s14
 let g:airline_left_sep = ''
 let g:airline_left_alt_sep = ''
@@ -96,7 +98,7 @@ let g:airline_symbols.whitespace = 'Ξ'
 
 " Ultisnips settings
 " Not using tab to expand
-let g:UltiSnipsExpandTrigger="<c-j>"
+let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<c-b>"
 let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 let g:UltiSnipsEditSplit="vertical"
@@ -127,6 +129,12 @@ let g:ycm_server_python_interpreter = "/usr/bin/python"
 
 " Flake8 key mapping - <Space> + f
 autocmd FileType python nnoremap <leader>f :call Flake8()<CR>
+
+" Execute current file with python - <Space> + p + y
+autocmd FileType python nnoremap <leader>py :!python %:p<CR>
+
+" Leader mapping to insert ipdb breakpoint (use '+' to move to next line)
+autocmd FileType python nnoremap <leader>pdb oimport ipdb; ipdb.set_trace()<Esc>+
 
 " Shortcuts and fixes for typos
 " Was `command`, replaced with `cnoreabbrev`
@@ -249,3 +257,26 @@ set wildmode=list:longest
 
 " Color scheme
 colorscheme badwolf
+syntax on
+hi Normal ctermbg=None
+hi NonText ctermbg=None
+
+" Fix key-map collision between YCM and UltiSnips
+"
+" TODO: Get this working
+"
+" let g:ycm_key_list_select_completion = ['<C-n>']
+" let g:ycm_key_list_previous_completion = ['<C-p>']
+" let g:UltiSnipsExpandTrigger="<tab>"
+" autocmd FileType python nnoremap <leader><leader> :call UltiSnips#ExpandSnippet()<CR>
+" autocmd FileType python nnoremap <leader><leader> :call UltiSnips#ExpandSnippet()<CR>
+"
+" Plugin 'ervandew/supertab'
+"
+" Supertab settings
+" let g:SuperTabDefaultCompletionType = '<C-n>'
+"
+" Better key bindings for UltiSnipsExpandTrigger
+" let g:UltiSnipsExpandTrigger="<cr>"
+" let g:UltiSnipsJumpForwardTrigger="<c-j>"
+" let g:UltiSnipsJumpBackwardTrigger="<c-k>"
