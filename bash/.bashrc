@@ -41,11 +41,6 @@ parse_git_branch() {
 export VISUAL=vim
 export EDITOR="$VISUAL"
 
-# Empty title for empty bash windows (useful in tmux)
-if [[ "$TERM" == "screen-256color" ]] || [[ "$TERM" == "bash" ]]; then
-    echo -ne '\033k   \033\\'
-fi
-
 # Print all colors
 all_colors() {
     color_per_row=12
