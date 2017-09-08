@@ -57,6 +57,9 @@ Plugin 'keith/swift.vim'
 Plugin 'pangloss/vim-javascript'
 Plugin 'mxw/vim-jsx'
 
+" Syntastic syntax  checking
+"Plugin 'vim-syntastic/syntastic' XXX: Disabling for now, glitching vim
+
 " Python-linting
 Plugin 'nvie/vim-flake8'
 
@@ -225,7 +228,7 @@ function! SetVimDir(...)
         let repo_name_hash = HashedString(repo_name)
         let file_path_hash = HashedString(file_path)
 
-        let dir_name = '/home/shawnhmh/tmp/git/' . repo_name_hash . '/' . git_branch_hash . '/' . file_path_hash
+        let dir_name = '/home/shawn/.tmp/git/' . repo_name_hash . '/' . git_branch_hash . '/' . file_path_hash
 
         " Make branch directory if doesn't exit
         if verbose
@@ -240,7 +243,7 @@ function! SetVimDir(...)
     unlet git_branch
     unlet verbose
 endfunc
-call SetVimDir()
+"call SetVimDir() - XXX: Fix this to default to user's home directory
 
 " Tab and indentation settings
 set tabstop=4
@@ -280,3 +283,6 @@ hi NonText ctermbg=None
 " let g:UltiSnipsExpandTrigger="<cr>"
 " let g:UltiSnipsJumpForwardTrigger="<c-j>"
 " let g:UltiSnipsJumpBackwardTrigger="<c-k>"
+
+" Syntastic settings
+let g:syntastic_javascript_checkers=['eslint']
