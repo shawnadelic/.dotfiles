@@ -32,7 +32,7 @@ man() {
 }
 
 # Custom prompt
-export PS1="\[\e[0;35m\]\u@\h\[\e[m\]\[\e[0;36m\]\w\[\e[m\]\[\e[0;37m\]\$(parse_git_branch)\[\e[m\]\$ "
+export PS1="\[\e[38;5;154m\]\u@\h\[\e[m\]\[\e[38;5;198m\]\w\[\e[m\]\[\e[0;37m\]\$(parse_git_branch)\[\e[m\]\$ "
 parse_git_branch() {
   git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1)/'
 }
@@ -66,7 +66,7 @@ alias time='date +"%r"'  # Current (readable) datetime
 # Git aliases
 alias gs='git status'
 alias gl='git log'
-alias gd='git diff'
+alias gd='git diff --color=always | less'
 alias gb='git branch'
 alias ga='git add -A'
 alias gc='git checkout'
@@ -85,3 +85,6 @@ alias pkill='pkill -f'
 alias xit="exit"
 alias eixt="exit"
 alias Q="q"
+
+# Vim shortcut
+alias v="vim"
