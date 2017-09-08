@@ -37,8 +37,8 @@ try_to_add_to_bashrc() {
       echo "Adding $new_source_path to $bashrc_path"
 
       # Actually add to bashrc
-      #echo "$comment" >> $bashrc_path
-      #echo $new_source_include >> $bashrc_path
+      echo "$comment" >> $bashrc_path
+      echo $new_source_include >> $bashrc_path
     else
       echo "File $new_source_path already sourced in $bashrc_path"
     fi
