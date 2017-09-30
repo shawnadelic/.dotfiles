@@ -53,6 +53,14 @@ all_colors() {
     echo
 }
 
+json() {
+    if [ ${1##*.} == "gz" ]; then
+        echo "Do something different for gzipped files"
+    else
+        jq '.' --color-output $1 | less -R
+    fi
+}
+
 # Aliases and shortcuts
 alias h='history'
 alias c='clear'
