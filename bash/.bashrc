@@ -53,6 +53,32 @@ all_colors() {
     echo
 }
 
+# Custom command for bashing into docker containers
+basher() {
+    case $1 in
+        "")
+            docker ps;
+            return;;
+        *)
+            local server_name=$1
+    esac
+
+    if [ -n $server_name ]; then
+        local server_id=$(docker ps -qf "name=$server_name" | cut -d ':' -f 2);
+    fi
+
+    if [ -n $server_name ] && [ -z $server_id ]; then
+        echo "No docker server found with name $server_name.";
+        echo;
+        docker ps;
+        return;
+    fi
+
+    if [ -n $server_id ]; then
+        docker exec -it $server_id bash;
+    fi
+}
+
 json() {
     if [ ${1##*.} == "gz" ]; then
         echo "Do something different for gzipped files"
@@ -96,3 +122,6 @@ alias Q="q"
 
 # Vim shortcut
 alias v="vim"
+
+# Shortcut for running docker-compose
+alias compose='docker-compose'
