@@ -101,6 +101,7 @@ alias time='date +"%r"'  # Current (readable) datetime
 alias gs='git status'
 alias gl='git log'
 alias gd='git diff --color=always | less'
+alias gds='git diff --staged --color=always | less'
 alias gb='git branch'
 alias ga='git add -A'
 alias gc='git checkout'
