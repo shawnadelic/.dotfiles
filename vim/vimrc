@@ -21,7 +21,6 @@ call vundle#begin()
 " Vundle plugin manager
 Plugin 'VundleVim/Vundle.vim'
 
-
 if (v:version >= 704)
   " AutoComplete
   Plugin 'Valloric/YouCompleteMe'
@@ -57,6 +56,7 @@ Plugin 'keith/swift.vim'
 Plugin 'pangloss/vim-javascript'
 Plugin 'mxw/vim-jsx'
 
+let g:jsx_ext_required = 0
 " Syntastic syntax  checking
 "Plugin 'vim-syntastic/syntastic' XXX: Disabling for now, glitching vim
 
@@ -164,6 +164,8 @@ map Q <Nop>
 "autocmd FileType qf nnoremap <buffer> <CR> <CR>:lclose<CR>
 
 " Close QuickFix and Preview Windows
+" This is easier than remembering each individual command (plus I made a
+" shortcut below)
 function! Close()
   lclose
   cclose
@@ -205,45 +207,45 @@ endfunc
 " This is actually kind of useful - Use different swap directory
 " for each git branch.
 "
-" TODO: Use subdirectory for specific repos
-function! SetVimDir(...)
-    let verbose = "false"
-    if exists("a:1") && (a:1 == "verbose")
-        let verbose = "true"
-    endif
-    if verbose == "true"
-        echo "Verbose Mode"
-    endif
+"" TODO: Use subdirectory for specific repos
+"function! SetVimDir(...)
+"    let verbose = "false"
+"    if exists("a:1") && (a:1 == "verbose")
+"        let verbose = "true"
+"    endif
+"    if verbose == "true"
+"        echo "Verbose Mode"
+"    endif
 
-    " It git branch, make new directory
-    " If no git branch, keep default dir
-    let parent_dir = substitute(expand("%:p:h"), '\n+\$', '', '')
-    let git_branch = substitute((system('cd ' . parent_dir . ' | git symbolic-ref --short HEAD 2>/dev/null')), '\n\+$', '', '')
-    if git_branch != ""
+"    " It git branch, make new directory
+"    " If no git branch, keep default dir
+"    let parent_dir = substitute(expand("%:p:h"), '\n+\$', '', '')
+"    let git_branch = substitute((system('cd ' . parent_dir . ' | git symbolic-ref --short HEAD 2>/dev/null')), '\n\+$', '', '')
+"    if git_branch != ""
 
-        let repo_name = split(system("git remote -v | grep '(fetch)'"))[1]
-        let file_path = substitute(expand("%:p:h"), '\n\+$', '', '')
+"        let repo_name = split(system("git remote -v | grep '(fetch)'"))[1]
+"        let file_path = substitute(expand("%:p:h"), '\n\+$', '', '')
 
-        let git_branch_hash = HashedString(repo_name)
-        let repo_name_hash = HashedString(repo_name)
-        let file_path_hash = HashedString(file_path)
+"        let git_branch_hash = HashedString(repo_name)
+"        let repo_name_hash = HashedString(repo_name)
+"        let file_path_hash = HashedString(file_path)
 
-        let dir_name = '/home/shawn/.tmp/git/' . repo_name_hash . '/' . git_branch_hash . '/' . file_path_hash
+"        let dir_name = '/home/shawn/.tmp/git/' . repo_name_hash . '/' . git_branch_hash . '/' . file_path_hash
 
-        " Make branch directory if doesn't exit
-        if verbose
-            echo("Verifying directory " . dir_name . " exists")
-        endif
-        call system('mkdir -p ' . dir_name)
-        let &dir=dir_name
-        unlet repo_name
-        unlet dir_name
-    endif
+"        " Make branch directory if doesn't exit
+"        if verbose
+"            echo("Verifying directory " . dir_name . " exists")
+"        endif
+"        call system('mkdir -p ' . dir_name)
+"        let &dir=dir_name
+"        unlet repo_name
+"        unlet dir_name
+"    endif
 
-    unlet git_branch
-    unlet verbose
-endfunc
-"call SetVimDir() - XXX: Fix this to default to user's home directory
+"    unlet git_branch
+"    unlet verbose
+"endfunc
+""call SetVimDir() - XXX: Fix this to default to user's home directory
 
 " Tab and indentation settings
 set tabstop=4
@@ -251,6 +253,9 @@ set shiftwidth=4
 set softtabstop=4
 set expandtab
 set autoindent
+
+" Language-specific formatting settings
+autocmd FileType javascript setlocal ts=2 sw=2 sts=2
 
 " Matching braces, etc
 set showmatch
@@ -286,3 +291,6 @@ hi NonText ctermbg=None
 
 " Syntastic settings
 let g:syntastic_javascript_checkers=['eslint']
+
+set backupdir=~/.vim/backup//
+set directory=~/.vim/swap//
