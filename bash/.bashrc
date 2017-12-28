@@ -126,3 +126,8 @@ alias v="vim"
 
 # Shortcut for running docker-compose
 alias compose='docker-compose'
+
+# Empty title for empty bash windows (useful in tmux)
+if [[ "$TERM" == "screen-256color" ]] || [[ "$TERM" == "bash" ]]; then
+    echo -ne '\033k   \033\\'
+fi
