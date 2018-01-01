@@ -51,7 +51,7 @@ Plugin 'tpope/vim-unimpaired'
 " Markers
 Plugin 'kshenoy/vim-signature'
 
-" Language-based syntax highlighting
+" Language or file-based syntax highlighting
 Plugin 'keith/swift.vim'
 Plugin 'pangloss/vim-javascript'
 Plugin 'mxw/vim-jsx'
@@ -114,13 +114,10 @@ filetype plugin indent on
 syntax enable
 autocmd BufRead,BufNewFile *.jinja set filetype=jinja
 autocmd BufRead,BufNewFile README set filetype=markdown
+autocmd BufRead,BufNewFile Dockerfile* set filetype=dockerfile
 
 " Ctags settings
 set tags=tags;/
-
-" Fix titles
-autocmd BufEnter * let &titlestring = ' ' . expand("%:t")
-set title
 
 " Fix YouCompleteMe preview window from not closing
 if (v:version > 704)
@@ -152,7 +149,6 @@ cnoreabbrev Q! q!
 " Better titles for tmux
 autocmd BufEnter * call system("tmux rename-window " . expand("%:t:r"))
 autocmd VimLeave * call system("tmux rename-window '  '")
-autocmd BufEnter * let &titlestring = ' ' . expand("%:t")
 set title
 
 " Set Quickfix window height to be taller
@@ -294,3 +290,6 @@ let g:syntastic_javascript_checkers=['eslint']
 
 set backupdir=~/.vim/backup//
 set directory=~/.vim/swap//
+
+" Use F2 to toggle paste on/off before and after pasting
+set pastetoggle=<F2>
