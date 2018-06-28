@@ -1,3 +1,8 @@
+# Empty title for empty bash windows (useful in tmux)
+#if [[ "$TERM" == "screen-256color" ]] || [[ "$TERM" == "bash" ]]; then
+#    echo -ne '\033k   \033\\'
+#fi
+
 # Wip - Create work-in-progress temp commit
 alias wip="git add -A && git commit -m 'WIP'"
 
@@ -121,13 +126,14 @@ alias xit="exit"
 alias eixt="exit"
 alias Q="q"
 
-# Vim shortcut
-alias v="vim"
-
 # Shortcut for running docker-compose
 alias compose='docker-compose'
 
-# Empty title for empty bash windows (useful in tmux)
-if [[ "$TERM" == "screen-256color" ]] || [[ "$TERM" == "bash" ]]; then
-    echo -ne '\033k   \033\\'
-fi
+# Shortcut for opening files
+alias open='gnome-open'
+
+# Workspace shortcuts
+alias work='cd ~/workspace/'
+
+# Tmux shortcuts
+alias ta='tmux attach'
