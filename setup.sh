@@ -60,6 +60,9 @@ vim +PluginInstall +qall
 cd ~/.vim/bundle/YouCompleteMe/
 ./install.sh
 
+# Install any Python requirements
+sudo pip install -r $dotfile_dir/requirements.txt
+
 # Install Tmux Plugins
 mkdir -p ~/.tmux/plugins && cd ~/.tmux/plugins
 git clone https://github.com/tmux-plugins/tpm
