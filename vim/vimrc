@@ -54,18 +54,30 @@ Plugin 'kshenoy/vim-signature'
 " Language or file-based syntax highlighting
 Plugin 'keith/swift.vim'
 Plugin 'pangloss/vim-javascript'
-Plugin 'mxw/vim-jsx'
+"Plugin 'mxw/vim-jsx'
+Plugin 'chemzqm/vim-jsx-improve'
+Plugin 'tweekmonster/django-plus.vim'
 
-let g:jsx_ext_required = 0
+"let g:jsx_ext_required = 0
 " Syntastic syntax  checking
-"Plugin 'vim-syntastic/syntastic' XXX: Disabling for now, glitching vim
+"Plugin 'vim-syntastic/syntastic' "XXX: Disabling for now, glitching vim
 
 " Python-linting
 Plugin 'nvie/vim-flake8'
 
+" Better Python styling
+Plugin 'Vimjas/vim-python-pep8-indent'
+
 " Vim markdown syntax
 Plugin 'godlygeek/tabular'
 Plugin 'plasticboy/vim-markdown'
+
+" Preview markdown files - Ctrl + p
+" NOTE: Requires grip (should be installed by setup script)
+Plugin 'JamshedVesuna/vim-markdown-preview'
+
+" Markdown preview settings
+let vim_markdown_preview_github=1
 
 " Fzf fuzzyfinder
 Plugin 'junegunn/fzf'
@@ -113,8 +125,12 @@ filetype plugin indent on
 " Syntax highlighting settings
 syntax enable
 autocmd BufRead,BufNewFile *.jinja set filetype=jinja
+autocmd BufRead,BufNewFile *.html set filetype=htmldjango
+autocmd BufRead,BufNewFile *.html set ts=2 sw=2 sts=2
+autocmd BufRead,BufNewFile *.css set ts=2 sw=2 sts=2
 autocmd BufRead,BufNewFile README set filetype=markdown
 autocmd BufRead,BufNewFile Dockerfile* set filetype=dockerfile
+autocmd BufRead,BufNewFile .env.* set filetype=sh
 
 " Ctags settings
 set tags=tags;/
