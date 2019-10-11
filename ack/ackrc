@@ -1,7 +1,10 @@
 --ignore-file=ext:map
---ignore-dir=static
 --ignore-dir=staticfiles
+--ignore-dir=node_modules
 --ignore-dir=venv
 --ignore-dir=env
+--ignore-dir=.terraform
 --ignore-file=is:tags
+--ignore-file=is:fixtures.json
+--ignore-file=ext:svg
 --color
