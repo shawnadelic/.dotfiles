@@ -54,9 +54,16 @@ Plugin 'kshenoy/vim-signature'
 " Language or file-based syntax highlighting
 Plugin 'keith/swift.vim'
 Plugin 'pangloss/vim-javascript'
-"Plugin 'mxw/vim-jsx'
 Plugin 'chemzqm/vim-jsx-improve'
+"Plugin 'styled-components/vim-styled-components'
 Plugin 'tweekmonster/django-plus.vim'
+Plugin 'leafgarland/typescript-vim'
+Plugin 'lepture/vim-jinja'
+Plugin 'jparise/vim-graphql'
+Plugin 'hashivim/vim-terraform'
+Plugin 'jvirtanen/vim-hcl'
+Plugin 'raimon49/requirements.txt.vim'
+
 
 "let g:jsx_ext_required = 0
 " Syntastic syntax  checking
@@ -64,6 +71,7 @@ Plugin 'tweekmonster/django-plus.vim'
 
 " Python-linting
 Plugin 'nvie/vim-flake8'
+Plugin 'fisadev/vim-isort'
 
 " Better Python styling
 Plugin 'Vimjas/vim-python-pep8-indent'
@@ -82,6 +90,9 @@ let vim_markdown_preview_github=1
 " Fzf fuzzyfinder
 Plugin 'junegunn/fzf'
 
+" Vim Wiki
+Plugin 'vimwiki/vimwiki'
+
 " Better tab jumping
 " TODO: Fork and make improvements
 Plugin 'ipod825/TagJump'
@@ -91,6 +102,12 @@ Plugin 'scrooloose/nerdcommenter'
 
 " Vim fugitive - Git integration
 Plugin 'tpope/vim-fugitive'
+
+" Code folding
+Plugin 'tmhedberg/simpylfold'
+
+" Folding settings
+set foldlevelstart=99
 
 " Airline settings
 set t_Co=256
@@ -127,6 +144,9 @@ syntax enable
 autocmd BufRead,BufNewFile *.jinja set filetype=jinja
 autocmd BufRead,BufNewFile *.html set filetype=htmldjango
 autocmd BufRead,BufNewFile *.html set ts=2 sw=2 sts=2
+autocmd BufRead,BufNewFile *.yml set ts=2 sw=2 sts=2
+autocmd BufRead,BufNewFile *.tfvars set ts=2 sw=2 sts=2
+autocmd BufRead,BufNewFile *.tf set ts=2 sw=2 sts=2
 autocmd BufRead,BufNewFile *.css set ts=2 sw=2 sts=2
 autocmd BufRead,BufNewFile README set filetype=markdown
 autocmd BufRead,BufNewFile Dockerfile* set filetype=dockerfile
@@ -149,8 +169,11 @@ autocmd FileType python nnoremap <leader>f :call Flake8()<CR>
 " Execute current file with python - <Space> + p + y
 autocmd FileType python nnoremap <leader>py :!python %:p<CR>
 
-" Leader mapping to insert ipdb breakpoint (use '+' to move to next line)
+" Leader mapping to insert ipdb breakpoint
 autocmd FileType python nnoremap <leader>pdb oimport ipdb; ipdb.set_trace()<Esc>+
+
+" Use the same shortcut (pdb) to insert breakpoint in JS...because
+autocmd FileType typescript nnoremap <leader>pdb odebugger;<Esc>+
 
 " Shortcuts and fixes for typos
 " Was `command`, replaced with `cnoreabbrev`
@@ -275,6 +298,9 @@ set showmatch
 " Menu autocomplete - Show all choices
 set wildmode=list:longest
 
+" Clipboard
+set clipboard^=unnamed
+
 " Color scheme
 colorscheme badwolf
 syntax on
@@ -309,3 +335,33 @@ set directory=~/.vim/swap//
 
 " Use F2 to toggle paste on/off before and after pasting
 set pastetoggle=<F2>
+
+" au filetype htmldjango call DisableIndent()
+
+function! DisableIndent()
+    " set autoindent&
+    " set cindent&
+    " set smartindent&
+    set indentexpr&
+endfunction
+
+" Explicit backspacing? Required, apparently
+set backspace=indent,eol,start
+
+" Trying this out
+" cnoreabbrev Ack Ack!
+nnoremap <Leader>a :Ack!<Space>
+
+function!   QuickFixOpenAll()
+    if empty(getqflist())
+        return
+    endif
+    let s:prev_val = ""
+    for d in getqflist()
+        let s:curr_val = bufname(d.bufnr)
+        if (s:curr_val != s:prev_val)
+            exec "edit " . s:curr_val
+        endif
+        let s:prev_val = s:curr_val
+    endfor
+endfunction
