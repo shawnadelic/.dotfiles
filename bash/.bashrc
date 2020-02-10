@@ -80,6 +80,7 @@ basher() {
     fi
 
     if [ -n $server_id ]; then
+        # To run as root: docker exec -it --user root bc6b496e64d9 bash
         docker exec -it $server_id bash;
     fi
 }
@@ -105,13 +106,15 @@ alias time='date +"%r"'  # Current (readable) datetime
 # Git aliases
 alias gs='git status'
 alias gl='git log'
-alias gd='git diff --color=always | less'
-alias gds='git diff --staged --color=always | less'
+alias gd='git diff --color=always ":(exclude)filename" | less'
+alias gds='git diff --staged --color=always ":(exclude)filename"| less'
 alias gb='git branch'
 alias ga='git add -A'
 alias gc='git checkout'
 alias branch='git branch'
 alias checkout='git checkout'
+
+alias g='git branch'
 
 # Ctags alias for python directories
 alias pytags="ctags -R --fields=+l --languages=python --python-kinds=-iv ."
@@ -137,3 +140,20 @@ alias work='cd ~/workspace/'
 
 # Tmux shortcuts
 alias ta='tmux attach'
+
+# List files and display chmod numeric value
+alias chmod_ls="stat -f '%A %N' *"
+
+# Find and replace
+project_rename() {
+    if [ "$#" -ne 2 ]; then
+        echo "Renaming requires 2 arguments, you maniac!";
+        return;
+    fi
+    # Ignore migrations directory - '-e' required for OSX
+    ack -v -g 'migrations' | ack -xl $1 | xargs sed -i '' -e "s/$1/$2/g"
+}
+
+vack() {
+    vim -p "ag $*"
+}
