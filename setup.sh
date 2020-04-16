@@ -25,6 +25,9 @@ ln -s "$dotfile_dir/ack/ackrc" .ackrc
 safe_mv .flake8
 ln -s "$dotfile_dir/flake8/flake8.ini" .flake8
 
+safe_mv .gitconfig
+ln -s "$dotfile_dir/git/.gitconfig" .gitconfig
+
 try_to_add_to_bashrc() {
   if [ $# -lt 3 ]; then
     echo "Error: Missing argument(s)"

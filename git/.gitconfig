@@ -1,0 +1,14 @@
+[user]
+    name = Shawn Her Many Horses
+    email = shawnhmh@gmail.com
+[alias]
+    recent = branch --sort=-committerdate
+[init]
+    templatedir = /Users/shawn.hermanyhorses/.git-templates
+[core]
+    editor = vim
+[merge]
+    tool = vimdiff
+    conflictstyle = diff3
+[difftool]
+	prompt = false
