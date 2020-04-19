@@ -133,7 +133,8 @@ alias Q="q"
 alias compose='docker-compose'
 
 # Shortcut for opening files
-alias open='gnome-open'
+# TODO: Only set on relevant OS
+# alias open='gnome-open'
 
 # Workspace shortcuts
 alias work='cd ~/workspace/'

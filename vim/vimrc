@@ -116,6 +116,10 @@ Plugin 'tmhedberg/simpylfold'
 " Folding settings
 set foldlevelstart=99
 
+" Dash integration (Mac-only)
+Plugin 'rizzatti/dash.vim'
+nmap <silent> <leader>d <Plug>DashSearch
+
 " Airline settings
 set t_Co=256
 if !exists('g:airline_symbols')
@@ -347,8 +351,8 @@ hi NonText ctermbg=None
 " Syntastic settings
 let g:syntastic_javascript_checkers=['eslint']
 
-set backupdir=~/.vim/backup//
-set directory=~/.vim/swap//
+set backupdir=~/.vim/backup
+set directory=~/.vim/swap
 
 " Use F2 to toggle paste on/off before and after pasting
 set pastetoggle=<F2>
