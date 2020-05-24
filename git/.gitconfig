@@ -3,12 +3,13 @@
     email = shawnhmh@gmail.com
 [alias]
     recent = branch --sort=-committerdate
-[init]
-    templatedir = /Users/shawn.hermanyhorses/.git-templates
 [core]
     editor = vim
+	excludesfile = /Users/shawnhmh/.gitignore
 [merge]
     tool = vimdiff
     conflictstyle = diff3
 [difftool]
 	prompt = false
+[push]
+	default = current
