@@ -57,12 +57,16 @@ Plugin 'pangloss/vim-javascript'
 Plugin 'chemzqm/vim-jsx-improve'
 "Plugin 'styled-components/vim-styled-components'
 Plugin 'tweekmonster/django-plus.vim'
-Plugin 'leafgarland/typescript-vim'
+Plugin 'jbgutierrez/vim-babel'
+"Plugin 'leafgarland/typescript-vim'
 Plugin 'lepture/vim-jinja'
 Plugin 'jparise/vim-graphql'
 Plugin 'hashivim/vim-terraform'
 Plugin 'jvirtanen/vim-hcl'
 Plugin 'raimon49/requirements.txt.vim'
+Plugin 'posva/vim-vue'
+"Plugin 'jason0x43/vim-js-indent'
+Plugin 'HerringtonDarkholme/yats'
 
 
 "let g:jsx_ext_required = 0
@@ -78,14 +82,17 @@ Plugin 'Vimjas/vim-python-pep8-indent'
 
 " Vim markdown syntax
 Plugin 'godlygeek/tabular'
-Plugin 'plasticboy/vim-markdown'
+" Plugin 'plasticboy/vim-markdown'
 
 " Preview markdown files - Ctrl + p
 " NOTE: Requires grip (should be installed by setup script)
-Plugin 'JamshedVesuna/vim-markdown-preview'
+" Plugin 'JamshedVesuna/vim-markdown-preview'
+Plugin 'shime/vim-livedown'
 
 " Markdown preview settings
-let vim_markdown_preview_github=1
+" let vim_markdown_preview_github=1
+" let vim_markdown_preview_browser='Google Chrome'
+" let vim_markdown_preview_use_xdg_open=1  " https://github.com/JamshedVesuna/vim-markdown-preview/issues/83
 
 " Fzf fuzzyfinder
 Plugin 'junegunn/fzf'
@@ -108,6 +115,10 @@ Plugin 'tmhedberg/simpylfold'
 
 " Folding settings
 set foldlevelstart=99
+
+" Dash integration (Mac-only)
+Plugin 'rizzatti/dash.vim'
+nmap <silent> <leader>d <Plug>DashSearch
 
 " Airline settings
 set t_Co=256
@@ -148,9 +159,11 @@ autocmd BufRead,BufNewFile *.yml set ts=2 sw=2 sts=2
 autocmd BufRead,BufNewFile *.tfvars set ts=2 sw=2 sts=2
 autocmd BufRead,BufNewFile *.tf set ts=2 sw=2 sts=2
 autocmd BufRead,BufNewFile *.css set ts=2 sw=2 sts=2
+autocmd BufRead,BufNewFile *.tsx set ts=2 sw=2 sts=2
 autocmd BufRead,BufNewFile README set filetype=markdown
 autocmd BufRead,BufNewFile Dockerfile* set filetype=dockerfile
 autocmd BufRead,BufNewFile .env.* set filetype=sh
+autocmd BufRead,BufNewFile .babelrc set filetype=javascript
 
 " Ctags settings
 set tags=tags;/
@@ -171,9 +184,11 @@ autocmd FileType python nnoremap <leader>py :!python %:p<CR>
 
 " Leader mapping to insert ipdb breakpoint
 autocmd FileType python nnoremap <leader>pdb oimport ipdb; ipdb.set_trace()<Esc>+
+autocmd FileType python nnoremap <leader>log oimport logging; logger = logging.getLogger(__name__)  # noqa
 
 " Use the same shortcut (pdb) to insert breakpoint in JS...because
 autocmd FileType typescript nnoremap <leader>pdb odebugger;<Esc>+
+autocmd FileType javascript nnoremap <leader>pdb odebugger;<Esc>+
 
 " Shortcuts and fixes for typos
 " Was `command`, replaced with `cnoreabbrev`
@@ -212,7 +227,11 @@ endfunction
 nnoremap <leader>c :call Close()<CR>
 
 " Vim markdown settings
-let g:vim_markdown_folding_disabled = 1
+" let g:vim_markdown_folding_disabled = 1
+
+" Hide banner for netrw
+let g:netrw_banner = 0
+let g:netrw_winsize = 25
 
 " FZF settings
 " https://github.com/junegunn/fzf
@@ -289,6 +308,9 @@ set softtabstop=4
 set expandtab
 set autoindent
 
+" Fix issues with syntax disappearing
+syntax sync minlines=256
+
 " Language-specific formatting settings
 autocmd FileType javascript setlocal ts=2 sw=2 sts=2
 
@@ -330,8 +352,8 @@ hi NonText ctermbg=None
 " Syntastic settings
 let g:syntastic_javascript_checkers=['eslint']
 
-" set backupdir=~/.vim/backup//
-" set directory=~/.vim/swap//
+set backupdir=~/.vim/backup
+set directory=~/.vim/swap
 
 " Use F2 to toggle paste on/off before and after pasting
 set pastetoggle=<F2>
