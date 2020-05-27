@@ -22,11 +22,11 @@ call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
 
 if (v:version >= 704)
-  " AutoComplete
-  Plugin 'Valloric/YouCompleteMe'
+    " AutoComplete
+    Plugin 'Valloric/YouCompleteMe'
 
-  " Snippets (not sure how much I use this)
-  Plugin 'SirVer/ultisnips'
+    " Snippets (not sure how much I use this)
+    Plugin 'SirVer/ultisnips'
 endif
 
 " Misc
@@ -112,7 +112,7 @@ set foldlevelstart=99
 " Airline settings
 set t_Co=256
 if !exists('g:airline_symbols')
-        let g:airline_symbols = {}
+    let g:airline_symbols = {}
 endif
 set laststatus=2
 let g:airline_theme='kolor'
@@ -157,7 +157,7 @@ set tags=tags;/
 
 " Fix YouCompleteMe preview window from not closing
 if (v:version > 704)
-  autocmd CompleteDone * pclose
+    autocmd CompleteDone * pclose
 endif
 
 " Python 2 interpretter for YCM
@@ -202,10 +202,10 @@ map Q <Nop>
 " This is easier than remembering each individual command (plus I made a
 " shortcut below)
 function! Close()
-  lclose
-  cclose
-  pclose
-  helpclose
+    lclose
+    cclose
+    pclose
+    helpclose
 endfunction
 
 " Shortcut for Close - <Space> + c
@@ -218,18 +218,18 @@ let g:vim_markdown_folding_disabled = 1
 " https://github.com/junegunn/fzf
 set rtp+=~/.fzf
 let g:fzf_colors =
-      \ { 'fg':      ['fg', 'Normal'],
-  \ 'bg':      ['bg', 'Normal'],
-  \ 'hl':      ['fg', 'Comment'],
-  \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
-  \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
-  \ 'hl+':     ['fg', 'Statement'],
-  \ 'info':    ['fg', 'PreProc'],
-  \ 'prompt':  ['fg', 'Conditional'],
-  \ 'pointer': ['fg', 'Exception'],
-  \ 'marker':  ['fg', 'Keyword'],
-  \ 'spinner': ['fg', 'Label'],
-  \ 'header':  ['fg', 'Comment'] }
+            \ { 'fg':      ['fg', 'Normal'],
+            \ 'bg':      ['bg', 'Normal'],
+            \ 'hl':      ['fg', 'Comment'],
+            \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
+            \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
+            \ 'hl+':     ['fg', 'Statement'],
+            \ 'info':    ['fg', 'PreProc'],
+            \ 'prompt':  ['fg', 'Conditional'],
+            \ 'pointer': ['fg', 'Exception'],
+            \ 'marker':  ['fg', 'Keyword'],
+            \ 'spinner': ['fg', 'Label'],
+            \ 'header':  ['fg', 'Comment'] }
 
 function! HashedString(string)
     let git_branch = "master"
@@ -330,8 +330,8 @@ hi NonText ctermbg=None
 " Syntastic settings
 let g:syntastic_javascript_checkers=['eslint']
 
-set backupdir=~/.vim/backup//
-set directory=~/.vim/swap//
+" set backupdir=~/.vim/backup//
+" set directory=~/.vim/swap//
 
 " Use F2 to toggle paste on/off before and after pasting
 set pastetoggle=<F2>
@@ -365,3 +365,5 @@ function!   QuickFixOpenAll()
         let s:prev_val = s:curr_val
     endfor
 endfunction
+
+Plugin 'powerline/powerline-fonts'
