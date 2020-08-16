@@ -67,6 +67,9 @@ Plugin 'raimon49/requirements.txt.vim'
 Plugin 'posva/vim-vue'
 "Plugin 'jason0x43/vim-js-indent'
 Plugin 'HerringtonDarkholme/yats'
+Plugin 'cespare/vim-toml'
+
+"Plugin 'numirias/semshi'
 
 
 "let g:jsx_ext_required = 0
@@ -174,7 +177,7 @@ if (v:version > 704)
 endif
 
 " Python 2 interpretter for YCM
-let g:ycm_server_python_interpreter = "/usr/bin/python"
+let g:ycm_server_python_interpreter = "python3"
 
 " Flake8 key mapping - <Space> + f
 autocmd FileType python nnoremap <leader>f :call Flake8()<CR>
