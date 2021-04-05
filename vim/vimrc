@@ -6,6 +6,9 @@ let mapleader = "\<Space>"
 " TODO: Probably not be necessary after all, will delete
 " set shell=bash
 
+" Disable modeline
+set nomodeline
+
 " Search settings
 set incsearch  " Incremental search (while typing)
 set hlsearch  " Highlight search terms
@@ -68,7 +71,6 @@ Plugin 'posva/vim-vue'
 "Plugin 'jason0x43/vim-js-indent'
 Plugin 'HerringtonDarkholme/yats'
 Plugin 'cespare/vim-toml'
-
 "Plugin 'numirias/semshi'
 
 
@@ -167,6 +169,7 @@ autocmd BufRead,BufNewFile README set filetype=markdown
 autocmd BufRead,BufNewFile Dockerfile* set filetype=dockerfile
 autocmd BufRead,BufNewFile .env.* set filetype=sh
 autocmd BufRead,BufNewFile .babelrc set filetype=javascript
+autocmd BufRead,BufNewFile supervisord.conf setf dosini
 
 " Ctags settings
 set tags=tags;/
@@ -186,7 +189,8 @@ autocmd FileType python nnoremap <leader>f :call Flake8()<CR>
 autocmd FileType python nnoremap <leader>py :!python %:p<CR>
 
 " Leader mapping to insert ipdb breakpoint
-autocmd FileType python nnoremap <leader>pdb oimport ipdb; ipdb.set_trace()<Esc>+
+" NOTE: Temporarily setting to pdb due to async errors
+autocmd FileType python nnoremap <leader>pdb oimport pdb; pdb.set_trace()<Esc>+
 autocmd FileType python nnoremap <leader>log oimport logging; logger = logging.getLogger(__name__)  # noqa
 
 " Use the same shortcut (pdb) to insert breakpoint in JS...because
@@ -392,3 +396,18 @@ function!   QuickFixOpenAll()
 endfunction
 
 Plugin 'powerline/powerline-fonts'
+
+" https://stackoverflow.com/questions/36601789/disable-for-good-vims-number-increment-that-is-mapped-to-ctrl-a
+map <C-a> <Nop>
+
+
+function! CloseHiddenBuffers()
+    let i = 0
+    let n = bufnr('$')
+    while i < n
+        let i = i + 1
+        if bufloaded(i) && bufwinnr(i) < 0
+            exe 'bd ' . i
+        endif
+    endwhile
+endfun

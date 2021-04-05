@@ -7,10 +7,13 @@
     templatedir = /Users/shawn.hermanyhorses/.git-templates
 [core]
     editor = vim
+    autocrlf = input
 [merge]
     tool = vimdiff
     conflictstyle = diff3
 [difftool]
-	prompt = false
+    prompt = false
 [push]
-	default = current
+    default = current
+[pull]
+    ff = only
