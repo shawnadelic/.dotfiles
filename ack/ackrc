@@ -4,6 +4,7 @@
 --ignore-dir=venv
 --ignore-dir=env
 --ignore-dir=.terraform
+--ignore-dir=.next
 --ignore-file=is:tags
 --ignore-file=is:fixtures.json
 --ignore-file=ext:svg
