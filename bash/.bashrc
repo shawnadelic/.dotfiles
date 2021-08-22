@@ -4,7 +4,7 @@
 #fi
 
 # Wip - Create work-in-progress temp commit
-alias wip="git add -A && git commit -m 'WIP'"
+alias wip="git add -A && git commit -m 'WIP' --no-verify"
 
 # Unwip - Uncommit previous wip commit, leaving changes in working branch
 unwip() {
