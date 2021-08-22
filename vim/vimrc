@@ -56,20 +56,22 @@ Plugin 'kshenoy/vim-signature'
 
 " Language or file-based syntax highlighting
 Plugin 'keith/swift.vim'
-Plugin 'pangloss/vim-javascript'
-Plugin 'chemzqm/vim-jsx-improve'
+"Plugin 'pangloss/vim-javascript'
+"Plugin 'chemzqm/vim-jsx-improve'
 "Plugin 'styled-components/vim-styled-components'
 Plugin 'tweekmonster/django-plus.vim'
-Plugin 'jbgutierrez/vim-babel'
+"Plugin 'jbgutierrez/vim-babel'
 "Plugin 'leafgarland/typescript-vim'
+Plugin 'peitalin/vim-jsx-typescript'
+Plugin 'junegunn/vim-plug'
 Plugin 'lepture/vim-jinja'
-Plugin 'jparise/vim-graphql'
+"Plugin 'jparise/vim-graphql'
 Plugin 'hashivim/vim-terraform'
 Plugin 'jvirtanen/vim-hcl'
 Plugin 'raimon49/requirements.txt.vim'
-Plugin 'posva/vim-vue'
+"Plugin 'posva/vim-vue'
 "Plugin 'jason0x43/vim-js-indent'
-Plugin 'HerringtonDarkholme/yats'
+"Plugin 'HerringtonDarkholme/yats'
 Plugin 'cespare/vim-toml'
 "Plugin 'numirias/semshi'
 
@@ -164,12 +166,16 @@ autocmd BufRead,BufNewFile *.yml set ts=2 sw=2 sts=2
 autocmd BufRead,BufNewFile *.tfvars set ts=2 sw=2 sts=2
 autocmd BufRead,BufNewFile *.tf set ts=2 sw=2 sts=2
 autocmd BufRead,BufNewFile *.css set ts=2 sw=2 sts=2
-autocmd BufRead,BufNewFile *.tsx set ts=2 sw=2 sts=2
+autocmd BufRead,BufNewFile *.{tsx,ts} set ts=2 sw=2 sts=2
+autocmd BufRead,BufNewFile *.{jsx,js} set ts=2 sw=2 sts=2
 autocmd BufRead,BufNewFile README set filetype=markdown
 autocmd BufRead,BufNewFile Dockerfile* set filetype=dockerfile
 autocmd BufRead,BufNewFile .env.* set filetype=sh
 autocmd BufRead,BufNewFile .babelrc set filetype=javascript
 autocmd BufRead,BufNewFile supervisord.conf setf dosini
+
+" Project-specific settings
+" autocmd BufRead,BufEnter /Users/shawnhmh/workspace/fx/fx-cms-new/*.{js,ts,jsx,tsx} set ts=2 sw=2 sts=2
 
 " Ctags settings
 set tags=tags;/
@@ -194,8 +200,10 @@ autocmd FileType python nnoremap <leader>pdb oimport pdb; pdb.set_trace()<Esc>+
 autocmd FileType python nnoremap <leader>log oimport logging; logger = logging.getLogger(__name__)  # noqa
 
 " Use the same shortcut (pdb) to insert breakpoint in JS...because
-autocmd FileType typescript nnoremap <leader>pdb odebugger;<Esc>+
-autocmd FileType javascript nnoremap <leader>pdb odebugger;<Esc>+
+autocmd FileType typescript nnoremap <leader>pdb odebugger<Esc>+
+autocmd FileType javascript nnoremap <leader>pdb odebugger<Esc>+
+autocmd FileType typescriptreact nnoremap <leader>pdb odebugger<Esc>+
+autocmd FileType javascriptreact nnoremap <leader>pdb odebugger<Esc>+
 
 " Shortcuts and fixes for typos
 " Was `command`, replaced with `cnoreabbrev`
@@ -357,7 +365,12 @@ hi NonText ctermbg=None
 " let g:UltiSnipsJumpBackwardTrigger="<c-k>"
 
 " Syntastic settings
-let g:syntastic_javascript_checkers=['eslint']
+"let g:syntastic_javascript_checkers=['eslint']
+"let g:syntastic_mode_map = { 'mode': 'passive' }
+" Disable error checking
+let g:ycm_show_diagnostics_ui = 0
+":highlight SignColumn guibg=darkgrey
+"set signcolumn=yes
 
 set backupdir=~/.vim/backup
 set directory=~/.vim/swap
