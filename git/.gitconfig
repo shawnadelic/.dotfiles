@@ -3,6 +3,8 @@
     email = shawnhmh@gmail.com
 [alias]
     recent = branch --sort=-committerdate
+    code = show -- . ':!package-lock.json' ':!package.json' ':!yarn.lock'
+    show-code = show -- . ':!package-lock.json' ':!package.json' ':!yarn.lock'
 [init]
     templatedir = /Users/shawn.hermanyhorses/.git-templates
 [core]
