@@ -2,6 +2,7 @@
 --ignore-dir=staticfiles
 --ignore-dir=node_modules
 --ignore-dir=venv
+--ignore-dir=build
 --ignore-dir=env
 --ignore-dir=.terraform
 --ignore-dir=.next
