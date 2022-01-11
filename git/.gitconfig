@@ -5,8 +5,11 @@
     recent = branch --sort=-committerdate
     code = show -- . ':!package-lock.json' ':!package.json' ':!yarn.lock'
     show-code = show -- . ':!package-lock.json' ':!package.json' ':!yarn.lock'
+    cleanup = "!git branch --merged | grep  -v '\\*\\|main\\staging\\master\\qa\\|develop' | xargs -n 1 -r git branch -d"
+    #sweep = "!git branch --merged $([[ $1 != \"-f\" ]] && git rev-parse master) | egrep -v \"(^\*|^\s*(master|develop)$)\" | xargs git branch -d"
 [init]
     templatedir = /Users/shawn.hermanyhorses/.git-templates
+    defaultBranch = master
 [core]
     editor = vim
     autocrlf = input
