@@ -151,10 +151,17 @@ project_rename() {
         echo "Renaming requires 2 arguments, you maniac!";
         return;
     fi
-    # Ignore migrations directory - '-e' required for OSX
+    # Ignore migrations directory - '-e' required for OSX - Note that / in string requires escaping (\\/)
     ack -v -g 'migrations' | ack -xl $1 | xargs sed -i '' -e "s/$1/$2/g"
 }
 
 vack() {
-    vim -p "ag $*"
+    vim -p $(ack -l $*)
 }
+
+fack() {
+    find . | ack $*
+}
+
+# CLI colors (required for Mac)
+export CLICOLOR=1
