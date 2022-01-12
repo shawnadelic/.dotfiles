@@ -136,6 +136,9 @@ alias compose='docker-compose'
 # TODO: Only set on relevant OS
 # alias open='gnome-open'
 
+# Open multiple files with vim
+alias vo="vim -p"
+
 # Workspace shortcuts
 alias work='cd ~/workspace/'
 
@@ -155,6 +158,7 @@ project_rename() {
     ack -v -g 'migrations' | ack -xl $1 | xargs sed -i '' -e "s/$1/$2/g"
 }
 
+# Search files and open in vim
 vack() {
     vim -p $(ack -l $*)
 }
