@@ -168,6 +168,7 @@ autocmd BufRead,BufNewFile *.tf set ts=2 sw=2 sts=2
 autocmd BufRead,BufNewFile *.css set ts=2 sw=2 sts=2
 autocmd BufRead,BufNewFile *.{tsx,ts} set ts=2 sw=2 sts=2
 autocmd BufRead,BufNewFile *.{jsx,js} set ts=2 sw=2 sts=2
+autocmd BufRead,BufNewFile *.json set ts=2 sw=2 sts=2
 autocmd BufRead,BufNewFile README set filetype=markdown
 autocmd BufRead,BufNewFile Dockerfile* set filetype=dockerfile
 autocmd BufRead,BufNewFile .env.* set filetype=sh
@@ -176,6 +177,8 @@ autocmd BufRead,BufNewFile supervisord.conf setf dosini
 
 " Project-specific settings
 " autocmd BufRead,BufEnter /Users/shawnhmh/workspace/fx/fx-cms-new/*.{js,ts,jsx,tsx} set ts=2 sw=2 sts=2
+autocmd BufRead,BufNewFile .eslintrc set filetype=json ts=2 sw=2 sts=2
+autocmd BufRead,BufNewFile .prettierrc set filetype=json ts=2 sw=2 sts=2
 
 " Ctags settings
 set tags=tags;/
@@ -196,6 +199,7 @@ autocmd FileType python nnoremap <leader>py :!python %:p<CR>
 
 " Leader mapping to insert ipdb breakpoint
 " NOTE: Temporarily setting to pdb due to async errors
+" autocmd FileType python nnoremap <leader>pdb oimport ipdb; ipdb.set_trace()<Esc>+
 autocmd FileType python nnoremap <leader>pdb oimport pdb; pdb.set_trace()<Esc>+
 autocmd FileType python nnoremap <leader>log oimport logging; logger = logging.getLogger(__name__)  # noqa
 
