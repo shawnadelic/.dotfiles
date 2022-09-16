@@ -62,7 +62,8 @@ Plugin 'keith/swift.vim'
 Plugin 'tweekmonster/django-plus.vim'
 "Plugin 'jbgutierrez/vim-babel'
 "Plugin 'leafgarland/typescript-vim'
-Plugin 'peitalin/vim-jsx-typescript'
+"Plugin 'peitalin/vim-jsx-typescript'
+Plugin 'heavenshell/vim-jsdoc'
 Plugin 'junegunn/vim-plug'
 Plugin 'lepture/vim-jinja'
 "Plugin 'jparise/vim-graphql'
@@ -75,6 +76,19 @@ Plugin 'raimon49/requirements.txt.vim'
 Plugin 'cespare/vim-toml'
 "Plugin 'numirias/semshi'
 
+" This guy's a genius:
+" https://blog.wildsky.cc/en/posts/vim-typescriptreact-redrawtime-exceeded-syntax-highlighting-disabled
+" https://jameschambers.co.uk/vim-typescript-slow
+Plugin 'leafgarland/typescript-vim'
+Plugin 'peitalin/vim-jsx-typescript'
+Plugin 'othree/yajs.vim'
+autocmd BufRead,BufNewFile *.tsx,*.jsx set ts=2 sw=2 sts=2 filetype=typescript.typescriptreact
+
+"https://github.com/HerringtonDarkholme/yats.vim
+" From docs:
+"   'set re=0 explicitly in your vimrc. Old regexp engine will incur performance
+"    issues for yats and old engine is usually turned on by other plugins.'
+set re=0
 
 "let g:jsx_ext_required = 0
 " Syntastic syntax  checking
@@ -153,6 +167,9 @@ let g:UltiSnipsJumpForwardTrigger="<c-b>"
 let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 let g:UltiSnipsEditSplit="vertical"
 
+let g:airline#extensions#tabline#enabled = 1
+" let g:airline#extensions#tabline#buffer_idx_mode = 1
+
 " Start vundle
 call vundle#end()
 filetype plugin indent on
@@ -166,8 +183,9 @@ autocmd BufRead,BufNewFile *.yml set ts=2 sw=2 sts=2
 autocmd BufRead,BufNewFile *.tfvars set ts=2 sw=2 sts=2
 autocmd BufRead,BufNewFile *.tf set ts=2 sw=2 sts=2
 autocmd BufRead,BufNewFile *.css set ts=2 sw=2 sts=2
-autocmd BufRead,BufNewFile *.{tsx,ts} set ts=2 sw=2 sts=2 filetype=typescript
-autocmd BufRead,BufNewFile *.{jsx,js} set ts=2 sw=2 sts=2
+"autocmd BufRead,BufNewFile *.{tsx,ts} set ts=2 sw=2 sts=2 filetype=typescript
+"autocmd BufRead,BufNewFile *.{jsx,js} set ts=2 sw=2 sts=2 filetype=javascript
+autocmd BufRead,BufNewFile *.js set ts=2 sw=2 sts=2 filetype=javascript
 autocmd BufRead,BufNewFile *.json set ts=2 sw=2 sts=2
 autocmd BufRead,BufNewFile README set filetype=markdown
 autocmd BufRead,BufNewFile Dockerfile* set filetype=dockerfile
@@ -326,6 +344,7 @@ set shiftwidth=4
 set softtabstop=4
 set expandtab
 set autoindent
+set tabpagemax=100
 
 " Fix issues with syntax disappearing
 syntax sync minlines=256
@@ -427,4 +446,11 @@ function! CloseHiddenBuffers()
             exe 'bd ' . i
         endif
     endwhile
+endfun
+
+
+function! TrimWhitespace()
+    let l:save = winsaveview()
+    keeppatterns %s/\s\+$//e
+    call winrestview(l:save)
 endfun

@@ -111,6 +111,8 @@ alias gds='git diff --staged --color=always ":(exclude)filename"| less'
 alias gb='git branch'
 alias ga='git add -A'
 alias gc='git checkout'
+alias gr='git recent'
+alias gcm='git commit -m'
 alias branch='git branch'
 alias checkout='git checkout'
 

@@ -1,0 +1,17 @@
+{
+    "workbench.statusBar.visible": false,
+    "window.zoomLevel": 2,
+    "workbench.startupEditor": "newUntitledFile",
+    "editor.fontLigatures": null,
+    "editor.fontSize": 12,
+    "window.zoomLevel": 1.25,
+    "extensions.autoUpdate": false,
+    "update.showReleaseNotes": false,
+    "extensions.ignoreRecommendations": true,
+    "update.mode": "manual",
+    "telemetry.telemetryLevel": "off",
+    "workbench.colorTheme": "ultra-black",
+    "terminal.external.osxExec": "iTerm.app",
+    "terminal.explorerKind": "external",
+    "workbench.editor.untitled.hint": "hidden",
+}
