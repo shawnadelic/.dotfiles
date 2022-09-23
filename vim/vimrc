@@ -6,9 +6,6 @@ let mapleader = "\<Space>"
 " TODO: Probably not be necessary after all, will delete
 " set shell=bash
 
-" Disable modeline
-set nomodeline
-
 " Search settings
 set incsearch  " Incremental search (while typing)
 set hlsearch  " Highlight search terms
@@ -75,6 +72,7 @@ Plugin 'raimon49/requirements.txt.vim'
 "Plugin 'HerringtonDarkholme/yats'
 Plugin 'cespare/vim-toml'
 "Plugin 'numirias/semshi'
+"Plugin 'dense-analysis/ale'
 
 " This guy's a genius:
 " https://blog.wildsky.cc/en/posts/vim-typescriptreact-redrawtime-exceeded-syntax-highlighting-disabled
@@ -83,6 +81,7 @@ Plugin 'leafgarland/typescript-vim'
 Plugin 'peitalin/vim-jsx-typescript'
 Plugin 'othree/yajs.vim'
 autocmd BufRead,BufNewFile *.tsx,*.jsx set ts=2 sw=2 sts=2 filetype=typescript.typescriptreact
+autocmd BufRead,BufNewFile *.ts set ts=2 sw=2 sts=2 filetype=typescript
 
 "https://github.com/HerringtonDarkholme/yats.vim
 " From docs:
@@ -392,8 +391,18 @@ hi NonText ctermbg=None
 "let g:syntastic_mode_map = { 'mode': 'passive' }
 " Disable error checking
 let g:ycm_show_diagnostics_ui = 0
+"let g:ycm_update_diagnostics_in_insert_mode = 0
 ":highlight SignColumn guibg=darkgrey
 "set signcolumn=yes
+" Disable modeline (keep enabled to display errors)
+set nomodeline
+
+" Write this in your vimrc file
+let g:ale_set_loclist = 0
+let g:ale_set_quickfix = 1
+let g:ale_keep_list_window_open = 1
+let b:ale_linters = {'javascript': ['eslint']}
+"let g:ale_sign_column_always = 1
 
 set backupdir=~/.vim/backup
 set directory=~/.vim/swap
@@ -447,6 +456,18 @@ function! CloseHiddenBuffers()
         endif
     endwhile
 endfun
+
+" Not working
+" https://github.com/ycm-core/YouCompleteMe/issues/3723
+"function! Lint()
+"    let g:ycm_show_diagnostics_ui = 1
+"    call sign_unplacelist(filter(sign_getplaced('%')[0].signs, {idx, val-> !match(val.name, 'Ycm')}))
+
+"    hi clear Error
+"    hi clear Todo
+"    hi clear SpellBad
+"    hi clear SpellCap
+"endfun
 
 
 function! TrimWhitespace()
