@@ -111,6 +111,7 @@ alias gds='git diff --staged --color=always ":(exclude)filename"| less'
 alias gb='git branch'
 alias ga='git add -A'
 alias gc='git checkout'
+alias gp='git pull'
 alias gr='git recent'
 alias gcm='git commit -m'
 alias branch='git branch'
@@ -162,11 +163,15 @@ project_rename() {
 
 # Search files and open in vim
 vack() {
-    vim -p $(ack -l $*)
+    vim -p $(ack -l "$@")
 }
 
 fack() {
     find . | ack $*
+}
+
+vit() {
+    vim -p $(git diff --staged --name-only)
 }
 
 # CLI colors (required for Mac)

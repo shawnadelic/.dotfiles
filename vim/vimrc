@@ -1,3 +1,7 @@
+" References
+" Navigation:
+" https://www.thegeekstuff.com/2009/03/8-essential-vim-editor-navigation-fundamentals/
+
 " Use <Space> as leader
 let mapleader = "\<Space>"
 
@@ -78,10 +82,9 @@ Plugin 'cespare/vim-toml'
 " https://blog.wildsky.cc/en/posts/vim-typescriptreact-redrawtime-exceeded-syntax-highlighting-disabled
 " https://jameschambers.co.uk/vim-typescript-slow
 Plugin 'leafgarland/typescript-vim'
-Plugin 'peitalin/vim-jsx-typescript'
-Plugin 'othree/yajs.vim'
-autocmd BufRead,BufNewFile *.tsx,*.jsx set ts=2 sw=2 sts=2 filetype=typescript.typescriptreact
-autocmd BufRead,BufNewFile *.ts set ts=2 sw=2 sts=2 filetype=typescript
+Plugin 'maxmellon/vim-jsx-pretty'
+autocmd BufRead,BufNewFile *.tsx set ts=2 sw=2 sts=2 filetype=typescriptreact.typescript
+autocmd BufRead,BufNewFile *.ts set ts=2 sw=2 sts=2 filetype=typescriptreact.typescript
 
 "https://github.com/HerringtonDarkholme/yats.vim
 " From docs:
@@ -182,9 +185,8 @@ autocmd BufRead,BufNewFile *.yml set ts=2 sw=2 sts=2
 autocmd BufRead,BufNewFile *.tfvars set ts=2 sw=2 sts=2
 autocmd BufRead,BufNewFile *.tf set ts=2 sw=2 sts=2
 autocmd BufRead,BufNewFile *.css set ts=2 sw=2 sts=2
-"autocmd BufRead,BufNewFile *.{tsx,ts} set ts=2 sw=2 sts=2 filetype=typescript
-"autocmd BufRead,BufNewFile *.{jsx,js} set ts=2 sw=2 sts=2 filetype=javascript
-autocmd BufRead,BufNewFile *.js set ts=2 sw=2 sts=2 filetype=javascript
+autocmd BufRead,BufNewFile *.jsx set ts=2 sw=2 sts=2 filetype=typescriptreact.javascript
+autocmd BufRead,BufNewFile *.js set ts=2 sw=2 sts=2 filetype=typescriptreact.javascript
 autocmd BufRead,BufNewFile *.json set ts=2 sw=2 sts=2
 autocmd BufRead,BufNewFile README set filetype=markdown
 autocmd BufRead,BufNewFile Dockerfile* set filetype=dockerfile
@@ -225,6 +227,8 @@ autocmd FileType typescript nnoremap <leader>pdb odebugger<Esc>+
 autocmd FileType javascript nnoremap <leader>pdb odebugger<Esc>+
 autocmd FileType typescriptreact nnoremap <leader>pdb odebugger<Esc>+
 autocmd FileType javascriptreact nnoremap <leader>pdb odebugger<Esc>+
+autocmd FileType typescriptreact.typescript nnoremap <leader>pdb odebugger<Esc>+
+autocmd FileType typescriptreact.javascript nnoremap <leader>pdb odebugger<Esc>+
 
 " Shortcuts and fixes for typos
 " Was `command`, replaced with `cnoreabbrev`
@@ -239,7 +243,10 @@ cnoreabbrev Q! q!
 " Better titles for tmux
 autocmd BufEnter * call system("tmux rename-window " . expand("%:t:r"))
 autocmd VimLeave * call system("tmux rename-window '  '")
-set title
+
+" Testing out - ChatGPT
+"set title
+"set titlestring=%{expand('%:t:r')}\ -\ Vim
 
 " Set Quickfix window height to be taller
 let g:flake8_quickfix_height=20
@@ -390,6 +397,7 @@ hi NonText ctermbg=None
 "let g:syntastic_javascript_checkers=['eslint']
 "let g:syntastic_mode_map = { 'mode': 'passive' }
 " Disable error checking
+" let g:ycm_show_diagnostics_ui = 1
 let g:ycm_show_diagnostics_ui = 0
 "let g:ycm_update_diagnostics_in_insert_mode = 0
 ":highlight SignColumn guibg=darkgrey
@@ -475,3 +483,8 @@ function! TrimWhitespace()
     keeppatterns %s/\s\+$//e
     call winrestview(l:save)
 endfun
+
+
+"Disable F1 (stupid touchbar)
+"https://vim.fandom.com/wiki/Disable_F1_built-in_help_key
+:nmap <F1> <nop>

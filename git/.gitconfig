@@ -8,6 +8,18 @@
     cleanup = "!git branch --merged | grep  -v '\\*\\|main\\staging\\master\\qa\\|develop' | xargs -n 1 -r git branch -d"
     #sweep = "!git branch --merged $([[ $1 != \"-f\" ]] && git rev-parse master) | egrep -v \"(^\*|^\s*(master|develop)$)\" | xargs git branch -d"
     set-upstream = "!git branch --set-upstream-to=origin/`git symbolic-ref --short HEAD`"
+    backup = "!f() { \
+        BRANCH_NAME=$(git symbolic-ref --short HEAD); \
+        TIMESTAMP=$(date +%m-%d-%y-%H%M); \
+        RANDOM_SUFFIX=$(LC_ALL=C tr -dc 'a-zA-Z0-9' < /dev/urandom | head -c 6); \
+        DESCRIPTION=$1; \
+        if [ -z \"$DESCRIPTION\" ]; then \
+            BACKUP_BRANCH=\"${BRANCH_NAME}-backup-${TIMESTAMP}-${RANDOM_SUFFIX}\"; \
+        else \
+            BACKUP_BRANCH=\"${BRANCH_NAME}-backup-${TIMESTAMP}-${DESCRIPTION}\"; \
+        fi; \
+        git branch \"$BACKUP_BRANCH\"; \
+    }; f"
 [init]
     templatedir = /Users/shawn.hermanyhorses/.git-templates
     defaultBranch = master
