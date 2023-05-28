@@ -147,6 +147,22 @@ alias work='cd ~/workspace/'
 # Tmux shortcuts
 alias ta='tmux attach'
 
+tmux_kill_range() {
+    if [ $# -lt 2 ]; then
+        echo "Usage: tmux_kill_range <start> <end>"
+        echo "Kills a range of tmux windows, where <start> and <end> are the indices of the windows."
+        return 1
+    fi
+
+    local start=$1
+    local end=$2
+    for (( i=$end; i >= $start; i-- )); do
+        # Start a subprocess to kill the window
+        (tmux kill-window -t $i &)
+    done
+}
+
+
 # List files and display chmod numeric value
 alias chmod_ls="stat -f '%A %N' *"
 
@@ -158,7 +174,7 @@ project_rename() {
     fi
     # Ignore migrations directory - '-e' required for OSX - Note that / in string requires escaping (\\/)
     # Linux
-    ack -v -g 'migrations' | ack -xl $1 | xargs sed -i '' -e "s/$1/$2/g"
+    ack -v -g 'migrations' | ack -xl $1 | xargs sed -e "s/$1/$2/g" -i
     # MacOs
     #ack -v -g 'migrations' | ack -xl $1 | xargs sed -e "s/$1/$2/g"
 }
@@ -174,3 +190,8 @@ fack() {
 
 # CLI colors (required for Mac)
 export CLICOLOR=1
+
+# Ubuntu-specific commands
+# TODO: Conditionally set these for only Ubuntu/Linux
+alias disable_updates="sudo apt remove update-notifier update-notifier-common"
+alias update_chrome="sudo apt update && sudo apt-get install google-chrome-stable"
