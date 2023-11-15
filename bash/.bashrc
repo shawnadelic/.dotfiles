@@ -166,6 +166,11 @@ vack() {
     vim -p $(ack -l "$@")
 }
 
+# Search files and open in Visual Studio Code
+vsack() {
+    code $(ack -l "$@")
+}
+
 fack() {
     find . | ack $*
 }
